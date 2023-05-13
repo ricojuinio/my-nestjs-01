@@ -1,9 +1,8 @@
-import { check } from "prettier";
 import { Check, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 @Check('"hours_duration" > 0')
-export class course {
+export class Course {
     @PrimaryGeneratedColumn()
     id: number;
 
