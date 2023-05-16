@@ -35,8 +35,12 @@ export class SessionService {
     return `This action returns all session`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} session`;
+  findOne(id: string) {
+    return new Promise((resolve) => {
+      resolve(this.sessions.findOneBy({
+        id: Number(id)
+      }))
+    });
   }
 
   update(id: number, updateSessionDto: UpdateSessionDto) {
@@ -48,6 +52,22 @@ export class SessionService {
   }
 
   findAllbyFacilitator( facilitator: string) {
-    
+    return new Promise((resolve, reject) => {
+      resolve(this.sessions.find({
+        select: {
+          start_datetime: true,
+          duration: true,
+          course: {
+            title: true
+          }
+        },
+        relations: {
+          course: true
+        },
+        where: {
+          facilitator: facilitator
+        }
+      }))
+    })
   }
 }
